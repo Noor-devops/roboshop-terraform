@@ -55,35 +55,35 @@ resource "aws_instance" "redis" {
   )
 }
 
-# resource "terraform_data" "redis" { 
+resource "terraform_data" "redis" { 
   
-#   # Optional: Re-run this remote script automatically if the Server instance is replaced
-#   triggers_replace = [
-#     aws_instance.redis.id
-#   ]
+  # Optional: Re-run this remote script automatically if the Server instance is replaced
+  triggers_replace = [
+    aws_instance.redis.id
+  ]
 
-#   connection {
-#     type        = "ssh"
-#     user        = "ec2-user"
-#     password = "DevOps321"
-#     host        = aws_instance.redis.private_ip
-#     # bastion_host     = "44.201.51.79"
-#     # bastion_user     = "ec2-user"                  # Changed to ec2-user
-#     # bastion_password = "DevOps321"
-#   }
+  connection {
+    type        = "ssh"
+    user        = "ec2-user"
+    password = "DevOps321"
+    host        = aws_instance.redis.private_ip
+    # bastion_host     = "44.201.51.79"
+    # bastion_user     = "ec2-user"                  # Changed to ec2-user
+    # bastion_password = "DevOps321"
+  }
 
-#   provisioner "file" {
-#     source      = "bootstrap.sh"       # Local file path
-#     destination = "/tmp/bootstrap.sh"         # Remote destination path
-#   }
+  provisioner "file" {
+    source      = "bootstrap.sh"       # Local file path
+    destination = "/tmp/bootstrap.sh"         # Remote destination path
+  }
 
-#   provisioner "remote-exec" {
-#     inline = [
-#       "chmod +x /tmp/bootstrap.sh",
-#       "sudo sh /tmp/bootstrap.sh redis ${var.environment}"
-#     ]
-#   }
-# }
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/bootstrap.sh",
+      "sudo sh /tmp/bootstrap.sh redis ${var.environment}"
+    ]
+  }
+}
 
 # resource "aws_instance" "rabbitmq" {
 #   ami           = data.aws_ami.joindevops.id
