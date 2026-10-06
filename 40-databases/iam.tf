@@ -77,7 +77,7 @@ resource "aws_iam_policy" "mysql" {
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
   policy = file("mysql-iam-policy.json")
-}
+} 
 
 resource "aws_iam_role_policy_attachment" "mysql" {
   role       = aws_iam_role.mysql.name
