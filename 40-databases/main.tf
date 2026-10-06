@@ -22,7 +22,7 @@ resource "terraform_data" "mongodb" {
     user        = "ec2-user"
     password = "DevOps321"
     host        = aws_instance.mongodb.private_ip
-    # bastion_host     = "44.201.51.79"
+    #bastion_host     = "aws_instance.bastion.public_ip"
     # bastion_user     = "ec2-user"                  # Changed to ec2-user
     # bastion_password = "DevOps321"
   }
@@ -41,19 +41,19 @@ resource "terraform_data" "mongodb" {
 }
 
 
-# resource "aws_instance" "redis" {
-#   ami           = data.aws_ami.joindevops.id
-#   instance_type = "t3.micro"
-#   vpc_security_group_ids = [local.redis_sg_id]
-#   subnet_id = local.database_subnet_id
+resource "aws_instance" "redis" {
+  ami           = data.aws_ami.joindevops.id
+  instance_type = "t3.micro"
+  vpc_security_group_ids = [local.redis_sg_id]
+  subnet_id = local.database_subnet_id
   
-#   tags = merge(
-#     {
-#         Name = "${local.common_name}-redis"
-#     },
-#     local.common_tags
-#   )
-# }
+  tags = merge(
+    {
+        Name = "${local.common_name}-redis"
+    },
+    local.common_tags
+  )
+}
 
 # resource "terraform_data" "redis" { 
   
