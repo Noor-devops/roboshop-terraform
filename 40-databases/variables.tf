@@ -22,7 +22,7 @@ variable "zone_id" {
   default     = "Z07090442QTQZUF01CVZY" # Replace with your actual hosted zone ID
 }
 
-variable "mysql_root_password" {
-  description = "The root password for the MySQL database"
-  type        = string
-}
+# variable "mysql_root_password" {
+#   description = "The root password for the MySQL database"
+#   type        = string
+# }
