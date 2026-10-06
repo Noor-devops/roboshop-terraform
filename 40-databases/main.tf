@@ -126,3 +126,16 @@ resource "terraform_data" "rabbitmq" {
   }
 }
 
+resource "aws_instance" "mysql" {
+  ami           = data.aws_ami.joindevops.id
+  instance_type = "t3.micro"
+  vpc_security_group_ids = [local.mysql_sg_id]
+  subnet_id = local.database_subnet_id
+  
+  tags = merge(
+    {
+        Name = "${local.common_name}-mysql"
+    },
+    local.common_tags
+  )
+}
