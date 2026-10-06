@@ -99,33 +99,30 @@ resource "aws_instance" "rabbitmq" {
   )
 }
 
-# resource "terraform_data" "rabbitmq" { 
+resource "terraform_data" "rabbitmq" { 
   
-#   # Optional: Re-run this remote script automatically if the Server instance is replaced
-#   triggers_replace = [
-#     aws_instance.rabbitmq.id
-#   ]
+  # Optional: Re-run this remote script automatically if the Server instance is replaced
+  triggers_replace = [
+    aws_instance.rabbitmq.id
+  ]
 
-#   connection {
-#     type        = "ssh"
-#     user        = "ec2-user"
-#     password = "DevOps321"
-#     host        = aws_instance.rabbitmq.private_ip
-#     # bastion_host     = "44.201.51.79"
-#     # bastion_user     = "ec2-user"                  # Changed to ec2-user
-#     # bastion_password = "DevOps321"
-#   }
+  connection {
+    type        = "ssh"
+    user        = "ec2-user"
+    password = "DevOps321"
+    host        = aws_instance.rabbitmq.private_ip
+  }
 
-#   provisioner "file" {
-#     source      = "bootstrap.sh"       # Local file path
-#     destination = "/tmp/bootstrap.sh"         # Remote destination path
-#   }
+  provisioner "file" {
+    source      = "bootstrap.sh"       # Local file path
+    destination = "/tmp/bootstrap.sh"         # Remote destination path
+  }
 
-#   provisioner "remote-exec" {
-#     inline = [
-#       "chmod +x /tmp/bootstrap.sh",
-#       "sudo sh /tmp/bootstrap.sh rabbitmq ${var.environment}"
-#     ]
-#   }
-# }
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/bootstrap.sh",
+      "sudo sh /tmp/bootstrap.sh rabbitmq ${var.environment}"
+    ]
+  }
+}
 
