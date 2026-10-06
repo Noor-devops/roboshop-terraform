@@ -85,19 +85,19 @@ resource "terraform_data" "redis" {
   }
 }
 
-# resource "aws_instance" "rabbitmq" {
-#   ami           = data.aws_ami.joindevops.id
-#   instance_type = "t3.micro"
-#   vpc_security_group_ids = [local.rabbitmq_sg_id]
-#   subnet_id = local.database_subnet_id
+resource "aws_instance" "rabbitmq" {
+  ami           = data.aws_ami.joindevops.id
+  instance_type = "t3.micro"
+  vpc_security_group_ids = [local.rabbitmq_sg_id]
+  subnet_id = local.database_subnet_id
   
-#   tags = merge(
-#     {
-#         Name = "${local.common_name}-rabbitmq"
-#     },
-#     local.common_tags
-#   )
-# }
+  tags = merge(
+    {
+        Name = "${local.common_name}-rabbitmq"
+    },
+    local.common_tags
+  )
+}
 
 # resource "terraform_data" "rabbitmq" { 
   
