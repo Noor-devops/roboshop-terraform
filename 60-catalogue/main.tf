@@ -12,3 +12,30 @@ resource "aws_instance" "catalogue" {
     local.common_tags
   )
 }
+
+resource "terraform_data" "catalogue" { 
+  
+  # Optional: Re-run this remote script automatically if the Server instance is replaced
+  triggers_replace = [
+    aws_instance.catalogue.id
+  ]
+
+  connection {
+    type        = "ssh"
+    user        = "ec2-user"
+    password = "DevOps321"
+    host        = aws_instance.catalogue.private_ip
+  }
+
+  provisioner "file" {
+    source      = "bootstrap.sh"       # Local file path
+    destination = "/tmp/bootstrap.sh"         # Remote destination path
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/bootstrap.sh",
+      "sudo sh /tmp/bootstrap.sh catalogue ${var.environment}"
+    ]
+  }
+}
