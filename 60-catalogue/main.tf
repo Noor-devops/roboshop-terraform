@@ -102,3 +102,23 @@ resource "aws_launch_template" "catalogue" {
       local.common_tags
   )
 }
+
+resource "aws_lb_target_group" "catalogue" {
+  name        = "${local.common_name}-catalogue"
+  port        = 80
+  protocol    = "HTTP"
+  vpc_id      = local.vpc_id
+  deregistration_delay = 30
+  
+  # Configure Health Checks
+  health_check {
+    healthy_threshold   = 2
+    path                = "/health"
+    protocol            = "HTTP"
+    port                = 8080
+    interval            = 10
+    timeout             = 5
+    unhealthy_threshold = 2
+    matcher             = "200-299" # Expect a HTTP 200-299 OK response
+  }
+}
