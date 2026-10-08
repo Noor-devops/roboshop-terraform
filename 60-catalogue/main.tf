@@ -43,4 +43,19 @@ resource "terraform_data" "catalogue" {
 resource "aws_ec2_instance_state" "catalogue" {
   instance_id = aws_instance.catalogue.id
   state       = "stopped" # Valid values: "running" or "stopped"
+  depends_on = [terraform_data.catalogue] # Ensure the remote-exec provisioner runs before stopping the instance
+}
+
+resource "aws_ami_from_instance" "catalogue" {
+  name               = "${local.common_name}-catalogue-${var.app_version}-${aws_instance.catalogue.id}" # roboshop-dev-catalogue-v3-instance-id          # Must be unique in the region
+  source_instance_id = aws_instance.catalogue.id  # The ID of the source EC2 instance
+  depends_on = [aws_ec2_instance_state.catalogue] # Ensure the instance is stopped before creating the AMI
+
+
+  tags = merge(
+    {
+        Name = "${local.common_name}-catalogue-${var.app_version}-${aws_instance.catalogue.id}"
+    },
+    local.common_tags
+  )
 }
