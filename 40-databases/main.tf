@@ -1,130 +1,130 @@
-# resource "aws_instance" "mongodb" {
-#   ami           = data.aws_ami.joindevops.id
-#   instance_type = "t3.micro"
-#   vpc_security_group_ids = [local.mongodb_sg_id]
-#   subnet_id = local.database_subnet_id
+resource "aws_instance" "mongodb" {
+  ami           = data.aws_ami.joindevops.id
+  instance_type = "t3.micro"
+  vpc_security_group_ids = [local.mongodb_sg_id]
+  subnet_id = local.database_subnet_id
   
-#   tags = merge(
-#     {
-#         Name = "${local.common_name}-mongodb"
-#     },
-#     local.common_tags
-#   )
-# }
+  tags = merge(
+    {
+        Name = "${local.common_name}-mongodb"
+    },
+    local.common_tags
+  )
+}
 
-# resource "terraform_data" "mongodb" {
-#   triggers_replace = [
-#     aws_instance.mongodb.id
-#   ]
+resource "terraform_data" "mongodb" {
+  triggers_replace = [
+    aws_instance.mongodb.id
+  ]
 
-#   connection {
-#     type        = "ssh"
-#     user        = "ec2-user"
-#     password = "DevOps321"
-#     host        = aws_instance.mongodb.private_ip
-#     #bastion_host     = "aws_instance.bastion.public_ip"
-#     # bastion_user     = "ec2-user"                  # Changed to ec2-user
-#     # bastion_password = "DevOps321"
-#   }
+  connection {
+    type        = "ssh"
+    user        = "ec2-user"
+    password = "DevOps321"
+    host        = aws_instance.mongodb.private_ip
+    #bastion_host     = "aws_instance.bastion.public_ip"
+    # bastion_user     = "ec2-user"                  # Changed to ec2-user
+    # bastion_password = "DevOps321"
+  }
 
-#   provisioner "file" {
-#     source      = "bootstrap.sh"
-#     destination = "/tmp/bootstrap.sh"
-#   }
+  provisioner "file" {
+    source      = "bootstrap.sh"
+    destination = "/tmp/bootstrap.sh"
+  }
 
-#   provisioner "remote-exec" {
-#     inline = [
-#       "chmod +x /tmp/bootstrap.sh",
-#       "sudo sh /tmp/bootstrap.sh mongodb ${var.environment}"
-#     ]
-#   }
-# }
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/bootstrap.sh",
+      "sudo sh /tmp/bootstrap.sh mongodb ${var.environment}"
+    ]
+  }
+}
 
 
-# resource "aws_instance" "redis" {
-#   ami           = data.aws_ami.joindevops.id
-#   instance_type = "t3.micro"
-#   vpc_security_group_ids = [local.redis_sg_id]
-#   subnet_id = local.database_subnet_id
+resource "aws_instance" "redis" {
+  ami           = data.aws_ami.joindevops.id
+  instance_type = "t3.micro"
+  vpc_security_group_ids = [local.redis_sg_id]
+  subnet_id = local.database_subnet_id
   
-#   tags = merge(
-#     {
-#         Name = "${local.common_name}-redis"
-#     },
-#     local.common_tags
-#   )
-# }
+  tags = merge(
+    {
+        Name = "${local.common_name}-redis"
+    },
+    local.common_tags
+  )
+}
 
-# resource "terraform_data" "redis" { 
+resource "terraform_data" "redis" { 
   
-#   # Optional: Re-run this remote script automatically if the Server instance is replaced
-#   triggers_replace = [
-#     aws_instance.redis.id
-#   ]
+  # Optional: Re-run this remote script automatically if the Server instance is replaced
+  triggers_replace = [
+    aws_instance.redis.id
+  ]
 
-#   connection {
-#     type        = "ssh"
-#     user        = "ec2-user"
-#     password = "DevOps321"
-#     host        = aws_instance.redis.private_ip
-#     # bastion_host     = "44.201.51.79"
-#     # bastion_user     = "ec2-user"                  # Changed to ec2-user
-#     # bastion_password = "DevOps321"
-#   }
+  connection {
+    type        = "ssh"
+    user        = "ec2-user"
+    password = "DevOps321"
+    host        = aws_instance.redis.private_ip
+    # bastion_host     = "44.201.51.79"
+    # bastion_user     = "ec2-user"                  # Changed to ec2-user
+    # bastion_password = "DevOps321"
+  }
 
-#   provisioner "file" {
-#     source      = "bootstrap.sh"       # Local file path
-#     destination = "/tmp/bootstrap.sh"         # Remote destination path
-#   }
+  provisioner "file" {
+    source      = "bootstrap.sh"       # Local file path
+    destination = "/tmp/bootstrap.sh"         # Remote destination path
+  }
 
-#   provisioner "remote-exec" {
-#     inline = [
-#       "chmod +x /tmp/bootstrap.sh",
-#       "sudo sh /tmp/bootstrap.sh redis ${var.environment}"
-#     ]
-#   }
-# }
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/bootstrap.sh",
+      "sudo sh /tmp/bootstrap.sh redis ${var.environment}"
+    ]
+  }
+}
 
-# resource "aws_instance" "rabbitmq" {
-#   ami           = data.aws_ami.joindevops.id
-#   instance_type = "t3.micro"
-#   vpc_security_group_ids = [local.rabbitmq_sg_id]
-#   subnet_id = local.database_subnet_id
+resource "aws_instance" "rabbitmq" {
+  ami           = data.aws_ami.joindevops.id
+  instance_type = "t3.micro"
+  vpc_security_group_ids = [local.rabbitmq_sg_id]
+  subnet_id = local.database_subnet_id
   
-#   tags = merge(
-#     {
-#         Name = "${local.common_name}-rabbitmq"
-#     },
-#     local.common_tags
-#   )
-# }
+  tags = merge(
+    {
+        Name = "${local.common_name}-rabbitmq"
+    },
+    local.common_tags
+  )
+}
 
-# resource "terraform_data" "rabbitmq" { 
+resource "terraform_data" "rabbitmq" { 
   
-#   # Optional: Re-run this remote script automatically if the Server instance is replaced
-#   triggers_replace = [
-#     aws_instance.rabbitmq.id
-#   ]
+  # Optional: Re-run this remote script automatically if the Server instance is replaced
+  triggers_replace = [
+    aws_instance.rabbitmq.id
+  ]
 
-#   connection {
-#     type        = "ssh"
-#     user        = "ec2-user"
-#     password = "DevOps321"
-#     host        = aws_instance.rabbitmq.private_ip
-#   }
+  connection {
+    type        = "ssh"
+    user        = "ec2-user"
+    password = "DevOps321"
+    host        = aws_instance.rabbitmq.private_ip
+  }
 
-#   provisioner "file" {
-#     source      = "bootstrap.sh"       # Local file path
-#     destination = "/tmp/bootstrap.sh"         # Remote destination path
-#   }
+  provisioner "file" {
+    source      = "bootstrap.sh"       # Local file path
+    destination = "/tmp/bootstrap.sh"         # Remote destination path
+  }
 
-#   provisioner "remote-exec" {
-#     inline = [
-#       "chmod +x /tmp/bootstrap.sh",
-#       "sudo sh /tmp/bootstrap.sh rabbitmq ${var.environment}"
-#     ]
-#   }
-# }
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/bootstrap.sh",
+      "sudo sh /tmp/bootstrap.sh rabbitmq ${var.environment}"
+    ]
+  }
+}
 
 resource "aws_instance" "mysql" {
   ami           = data.aws_ami.joindevops.id
@@ -141,29 +141,29 @@ resource "aws_instance" "mysql" {
   )
 }
 
-resource "terraform_data" "mysql" { 
+# resource "terraform_data" "mysql" { 
   
-  # Optional: Re-run this remote script automatically if the Server instance is replaced
-  triggers_replace = [
-    aws_instance.mysql.id
-  ]
+#   # Optional: Re-run this remote script automatically if the Server instance is replaced
+#   triggers_replace = [
+#     aws_instance.mysql.id
+#   ]
 
-  connection {
-    type        = "ssh"
-    user        = "ec2-user"
-    password = "DevOps321"
-    host        = aws_instance.mysql.private_ip
-  }
+#   connection {
+#     type        = "ssh"
+#     user        = "ec2-user"
+#     password = "DevOps321"
+#     host        = aws_instance.mysql.private_ip
+#   }
 
-  provisioner "file" {
-    source      = "bootstrap.sh"       # Local file path
-    destination = "/tmp/bootstrap.sh"         # Remote destination path
-  }
+#   provisioner "file" {
+#     source      = "bootstrap.sh"       # Local file path
+#     destination = "/tmp/bootstrap.sh"         # Remote destination path
+#   }
 
-  provisioner "remote-exec" {
-    inline = [
-      "chmod +x /tmp/bootstrap.sh",
-      "sudo sh /tmp/bootstrap.sh mysql ${var.environment}"
-    ]
-  }
-}
+#   provisioner "remote-exec" {
+#     inline = [
+#       "chmod +x /tmp/bootstrap.sh",
+#       "sudo sh /tmp/bootstrap.sh mysql ${var.environment}"
+#     ]
+#   }
+# }
