@@ -141,29 +141,29 @@ resource "aws_instance" "mysql" {
   )
 }
 
-# resource "terraform_data" "mysql" { 
+resource "terraform_data" "mysql" { 
   
-#   # Optional: Re-run this remote script automatically if the Server instance is replaced
-#   triggers_replace = [
-#     aws_instance.mysql.id
-#   ]
+  # Optional: Re-run this remote script automatically if the Server instance is replaced
+  triggers_replace = [
+    aws_instance.mysql.id
+  ]
 
-#   connection {
-#     type        = "ssh"
-#     user        = "ec2-user"
-#     password = "DevOps321"
-#     host        = aws_instance.mysql.private_ip
-#   }
+  connection {
+    type        = "ssh"
+    user        = "ec2-user"
+    password = "DevOps321"
+    host        = aws_instance.mysql.private_ip
+  }
 
-#   provisioner "file" {
-#     source      = "bootstrap.sh"       # Local file path
-#     destination = "/tmp/bootstrap.sh"         # Remote destination path
-#   }
+  provisioner "file" {
+    source      = "bootstrap.sh"       # Local file path
+    destination = "/tmp/bootstrap.sh"         # Remote destination path
+  }
 
-#   provisioner "remote-exec" {
-#     inline = [
-#       "chmod +x /tmp/bootstrap.sh",
-#       "sudo sh /tmp/bootstrap.sh mysql ${var.environment}"
-#     ]
-#   }
-# }
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/bootstrap.sh",
+      "sudo sh /tmp/bootstrap.sh mysql ${var.environment}"
+    ]
+  }
+}
