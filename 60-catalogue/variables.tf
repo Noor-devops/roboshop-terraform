@@ -16,13 +16,17 @@ variable "domain_name" {
   default     = "nirfaws.online"
 }
 
-variable "zone_id" {
-  description = "The Route 53 hosted zone ID"
-  type        = string
-  default     = "Z07090442QTQZUF01CVZY" # Replace with your actual hosted zone ID
-}
+# variable "zone_id" {
+#   description = "The Route 53 hosted zone ID"
+#   type        = string
+#   default     = "Z07090442QTQZUF01CVZY" # Replace with your actual hosted zone ID
+# }
 
-variable "mysql_root_password" {
-  description = "The root password for the MySQL database"
-  type        = string
+# variable "mysql_root_password" {
+#   description = "The root password for the MySQL database"
+#   type        = string
+# }
+
+variable "app_version" {
+    default = "v3"
 }
